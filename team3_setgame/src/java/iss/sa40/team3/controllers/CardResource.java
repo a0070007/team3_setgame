@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/card")
-public class CardServlet {
+public class CardResource {
 
     
     public List<Card> getShuffledDeck(){
