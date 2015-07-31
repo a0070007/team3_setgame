@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -31,13 +32,20 @@ public class PlayerBean {
         return((query.executeUpdate() == 1)? true:false);
     }
     
-    public void insertPlayer(String email, String password, String name, int highscore){
+    public boolean insertPlayer(String email, String password, String name, int highscore){
         Player p = new Player();
         p.setEmail(email);
         p.setPassword(password);
         p.setName(name);
-        p.setHighscore(0);
-        em.persist(p);
+        p.setHighscore(highscore);
+        try{
+            em.persist(p);
+        }
+        catch (PersistenceException e){
+            return (false);
+        }
+        return true;
+        
     }
     
 }

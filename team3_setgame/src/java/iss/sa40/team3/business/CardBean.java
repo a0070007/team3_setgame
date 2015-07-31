@@ -1,13 +1,13 @@
-package iss.sa40.team3.controllers;
+package iss.sa40.team3.business;
 
 import iss.sa40.team3.model.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.annotation.WebServlet;
+import javax.ejb.Stateless;
 
-@WebServlet("/card")
-public class CardResource {
+@Stateless
+public class CardBean {
 
     
     public List<Card> getShuffledDeck(){
