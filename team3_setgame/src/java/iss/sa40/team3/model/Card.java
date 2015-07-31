@@ -2,7 +2,7 @@ package iss.sa40.team3.model;
 
 import java.util.Random;
 
-public class Card {
+public class Card implements Comparable<Card>{
      
     private int number;
     private int shading;

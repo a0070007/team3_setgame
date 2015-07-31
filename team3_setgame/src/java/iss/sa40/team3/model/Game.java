@@ -1,14 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package iss.sa40.team3.model;
 
-/**
- *
- * @author estherxie
- */
+import java.util.List;
+
 public class Game {
+
+    List<Card> Deck;
+    List<Card> Table;
+
+    public List<Card> getDeck() {
+        return Deck;
+    }
+
+    public void setDeck(List<Card> Deck) {
+        this.Deck = Deck;
+    }
+
+    public List<Card> getTable() {
+        return Table;
+    }
+
+    public void setTable(List<Card> Table) {
+        this.Table = Table;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" + "Deck=" + Deck + ", Table=" + Table + '}';
+    }
+    
+    
     
 }
