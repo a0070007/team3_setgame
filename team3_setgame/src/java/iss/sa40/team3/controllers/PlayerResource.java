@@ -2,15 +2,9 @@ package iss.sa40.team3.controllers;
 
 import iss.sa40.team3.business.PlayerBean;
 import iss.sa40.team3.model.Player;
-import java.awt.PageAttributes;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Inject;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import static javax.swing.text.html.FormSubmitEvent.MethodType.GET;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -21,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 @RequestScoped
 @Path ("/player")
-public class PlayerResource extends HttpServlet{
+public class PlayerResource {
     
     @EJB private PlayerBean playerBean; 
     
