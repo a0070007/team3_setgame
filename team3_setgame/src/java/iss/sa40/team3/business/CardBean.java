@@ -27,19 +27,24 @@ public class CardBean {
     
     public List<List<Card>> issueCards(List<Card> deck, List<Card> table, int cardCount) {
         List<List<Card>> list = new ArrayList<>();
+        List<Card> newCards = new ArrayList<>();
         for (int i=0; i < cardCount; i++) {
-                table.add(deck.remove(deck.size() - 1));
+                Card card = deck.remove(deck.size() - 1); 
+                table.add(card);
+                newCards.add(card);
         }
         
         list.add((List<Card>) deck);
-        list.add((List<Card>)table);
+        list.add((List<Card>) table);
+        list.add((List<Card>) newCards);
         return list;
     }
 
-    public void removeCards(List<Card> set, List<Card> table) {
+    public List<Card> removeCards(List<Card> set, List<Card> table) {
             for (Card card : set) {
                table.remove(card);
             }
+            return table;
     }
     
     public ArrayList<ArrayList<Card>> getAllSets(List<Card> cards, boolean findOnlyFirstSet) {

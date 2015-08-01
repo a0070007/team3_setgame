@@ -48,4 +48,11 @@ public class PlayerBean {
         
     }
     
+    public List<Player> getTop10Players(){
+        TypedQuery<Player> query = em.createQuery(
+                "SELECT * FROM table ORDER BY highscore DESC LIMIT 10", Player.class);
+        List<Player> result = query.getResultList();
+        return ((result.size() > 0)? result:null);
+    }
+    
 }
