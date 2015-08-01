@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/handlebars-v3.0.3.js" type="text/javascript"></script>
+        <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="game.js" type="text/javascript"></script>
+        <link href="game.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!--        Card Template-->
+        <script id="cardtemplate" type="text/x-handlebars">
+            <li class="ui-state-default" id="{{ cardid }}">
+                <img src="images/cards/{{ cardid }}.gif">
+            </li>
+        </script>
+        
+    </head>
+
+    <body>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 contenteditable="true">Team 3 Set Game</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <ul id="selectable">
+                            <li class="ui-state-default" id="01"><img src="images/cards/01.gif"></li>
+                            <li class="ui-state-default" id="02"><img src="images/cards/02.gif"></li>
+                            <li class="ui-state-default" id="03"><img src="images/cards/03.gif"></li>
+                            <li class="ui-state-default">4</li>
+                            <li class="ui-state-default">5</li>
+                            <li class="ui-state-default">6</li>
+                            <li class="ui-state-default">7</li>
+                            <li class="ui-state-default">8</li>
+                            <li class="ui-state-default">9</li>
+                            <li class="ui-state-default">10</li>
+                            <li class="ui-state-default">11</li>
+                            <li class="ui-state-default">12</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="col-md-6">
+                            <h3>Score Board</h3>
+                            <table class="table" id="table_player">
+                                <thead>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <td>James</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <td>John</td>
+                                        <td>4</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <td>Peter</td>
+                                        <td>3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Game Details</h3>
+                            <h4>Title:</h3>
+                                <h4 id="lb_gametitle" contenteditable="true">Game A</h3>
+                                    <h4>Time Elapsed:</h3>
+                                        <h4 id="lb_timelaspe" contenteditable="true">mm:ss</h3>
+                                            <h4>No of Player:</h3>
+                                                <h4 id="lb_noofplayer" contenteditable="true">8/10</h3>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <hr>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <h3>Game Chat</h3>
+                                                        <button type="button" id=btn_submit class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="section">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <hr>
+                                                                </div>
+                                                                <div class="col-md-12">© 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
+                                                                    are registered trademarks of Team3Resources. All video, audio, visual and
+                                                                    textual content on this web site (including all names, characters, trademarks
+                                                                    and logos) is protected by copyright, trademark and other intellectual
+                                                                    property rights. By using this site, you agree to the Terms and Conditions
+                                                                    of Use.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </body>
+                                                    </html>
