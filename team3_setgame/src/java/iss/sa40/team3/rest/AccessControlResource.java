@@ -3,7 +3,7 @@ package iss.sa40.team3.rest;
 import iss.sa40.team3.business.PlayerBean;
 import iss.sa40.team3.model.Player;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

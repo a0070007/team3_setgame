@@ -7,19 +7,23 @@ import iss.sa40.team3.model.Game;
 import iss.sa40.team3.model.Main;
 import iss.sa40.team3.model.Player;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @RequestScoped
 @Path ("/game")
+@Produces(MediaType.APPLICATION_JSON)
 public class GameResource {
     
     @EJB private CardBean cardBean;
@@ -33,23 +37,23 @@ public class GameResource {
             @PathParam("duration")String duration, 
             @PathParam("maxPlayers") int maxPlayers){
         
-        List<Card> table = new ArrayList<Card>();
+        Card[]  table = new Card[12];
         List<Card> deck = cardBean.getShuffledDeck();
-        List<List<Card>> list = cardBean.issueCards(deck, table, 12);
+        List<Object> list = cardBean.issueCards(deck, table, 12);
         deck = (List<Card>) list.get(0);
-        table = (List<Card>) list.get(1);
+        table = (Card[]) list.get(1);
         while(!cardBean.setExists(table)){
             deck.clear();
-            table.clear();
+            Arrays.fill(table, null);
             list.clear();
             deck = cardBean.getShuffledDeck();
             list = cardBean.issueCards(deck, table, 12);
             deck = (List<Card>) list.get(0);
-            table = (List<Card>) list.get(1);
+            table = (Card[]) list.get(1);
         }
         
         Game game = new Game();
-        if (title == null && duration != null && maxPlayers>0){
+        if (title != null && duration != null && maxPlayers>0){
             game.setTitle(title);
             game.setDuration(duration);
             game.setDeck(deck);
@@ -82,11 +86,14 @@ public class GameResource {
     }
     
     @GET
-    @Path("{gameId}/{cardId1}/{cardId2}/{cardId3}/{email}")
+    @Path("{gameId}/{position1}/{cardId1}/{position2}/{cardId2}/{position3}/{cardId3}/{email}")
     public Response verifyChosenSet(
             @PathParam("gameId") int gameId,
+            @PathParam("position1") int position1,
             @PathParam("cardId1") int cardId1,
+            @PathParam("position2") int position2,
             @PathParam("cardId2") int cardId2,
+            @PathParam("position3") int position3,
             @PathParam("cardId3") int cardId3,
             @PathParam("email") String email){
         
@@ -109,10 +116,15 @@ public class GameResource {
                 Integer.parseInt(Integer.toString(cardId3).substring(2,3)),
                 Integer.parseInt(Integer.toString(cardId3).substring(3,4)));
         
-        List<Card> set = new ArrayList<>();
-        set.add(card1);
-        set.add(card2);
-        set.add(card3);
+        Card[] set = new Card[3];
+        set[0] = card1;
+        set[1] = card2;
+        set[2] = card3;
+        
+        int[] position = new int[3];
+        position[1] = position1;
+        position[2] = position2;
+        position[3] = position3;
         
         boolean isSet = cardBean.setExists(set);
         if(isSet == false)
@@ -142,7 +154,7 @@ public class GameResource {
         playerscore.put(player, playerscore.get(player)+1);
         
         //remove the set (3 cards) from table and round++
-        selectedGame.setTable(cardBean.removeCards(set, selectedGame.getTable()));
+        selectedGame.setTable(cardBean.removeCards(position, selectedGame.getTable()));
         selectedGame.setRound(selectedGame.getRound()+1);
         
         //if no more cards in deck, return response 'ok' only
@@ -150,11 +162,11 @@ public class GameResource {
             return (Response.ok().build());
         
         //if there are cards in deck, return response 'ok' and id of 3 cards
-        List<List<Card>> list = cardBean.issueCards(selectedGame.getDeck(), selectedGame.getTable(), 3);
-        selectedGame.setDeck(list.get(0));
-        selectedGame.setTable(list.get(1));
+        List<Object> list = cardBean.issueCards(selectedGame.getDeck(), selectedGame.getTable(), 3);
+        selectedGame.setDeck((List<Card>) list.get(0));
+        selectedGame.setTable((Card[]) list.get(1));
         
-        List<Card> newCards = list.get(2);
+        List<Card> newCards = (List<Card>) list.get(2);
         List<String> newCardsId = new ArrayList<>();
         for(Card card: newCards){
             int number = card.getNumber();
@@ -176,7 +188,7 @@ public class GameResource {
     }
     
     @GET
-    @Path("{gameId}")
+    @Path("verifyTableSet/{gameId}")
     public Response verifyTableSet(@PathParam("gameId") int gameId){
     
         List<Game> games = main.getGames();

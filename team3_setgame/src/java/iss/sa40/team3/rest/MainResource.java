@@ -6,16 +6,20 @@ import iss.sa40.team3.model.Main;
 import iss.sa40.team3.model.Player;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @RequestScoped
 @Path ("/main")
+@Produces(MediaType.APPLICATION_JSON)
 public class MainResource {
     
     @EJB private PlayerBean playerBean;
@@ -27,7 +31,7 @@ public class MainResource {
         
         List<Game> games = main.getGames();
         
-        JsonArray gamesArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder gamesArray = Json.createArrayBuilder();
         for (Game game : games){
             gamesArray.add(game.toJson());
         }
@@ -40,6 +44,7 @@ public class MainResource {
     }
     
     @GET
+    @Path("/gettopplayers")
     public Response getTopPlayers(){
         List<Player> topPlayers = playerBean.getTop10Players();
         

@@ -1,12 +1,14 @@
 package iss.sa40.team3.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
+
 
 @ApplicationScoped
 public class Main {
     
-    List<Game> games;
+    List<Game> games = new ArrayList<Game>();
 
     public List<Game> getGames() {
         return games;

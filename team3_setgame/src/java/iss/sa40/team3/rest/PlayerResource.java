@@ -3,7 +3,7 @@ package iss.sa40.team3.rest;
 import iss.sa40.team3.business.PlayerBean;
 import iss.sa40.team3.model.Player;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,13 +13,13 @@ import javax.ws.rs.core.Response;
 
 @RequestScoped
 @Path ("/player")
+@Produces(MediaType.APPLICATION_JSON)
 public class PlayerResource {
     
     @EJB private PlayerBean playerBean; 
     
     @GET
     @Path("{email}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getPlayer(@PathParam("email") String email){
         Player player = new Player();
         if (email != null){

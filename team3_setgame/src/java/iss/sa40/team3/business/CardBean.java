@@ -25,40 +25,40 @@ public class CardBean {
         return cards;
     }
     
-    public List<List<Card>> issueCards(List<Card> deck, List<Card> table, int cardCount) {
-        List<List<Card>> list = new ArrayList<>();
+    public List<Object> issueCards(List<Card> deck, Card[] table, int cardCount) {
+        List<Object> list = new ArrayList<>();
         List<Card> newCards = new ArrayList<>();
         for (int i=0; i < cardCount; i++) {
                 Card card = deck.remove(deck.size() - 1); 
-                table.add(card);
+                table[i] = card;
                 newCards.add(card);
         }
         
         list.add((List<Card>) deck);
-        list.add((List<Card>) table);
+        list.add(table);
         list.add((List<Card>) newCards);
         return list;
     }
 
-    public List<Card> removeCards(List<Card> set, List<Card> table) {
-            for (Card card : set) {
-               table.remove(card);
-            }
-            return table;
+    public Card[] removeCards(int[] cardPosition, Card[] table) {
+        for(int i =0; i<cardPosition.length; i++)    
+            table[i] = null;
+            
+        return table;
     }
     
-    public ArrayList<ArrayList<Card>> getAllSets(List<Card> cards, boolean findOnlyFirstSet) {
+    public ArrayList<ArrayList<Card>> getAllSets(Card[] cards, boolean findOnlyFirstSet) {
        ArrayList<ArrayList<Card>> result = new ArrayList<ArrayList<Card>>();
        if (cards == null) return result;
-       int size = cards.size();
+       int size = cards.length;
        for (int ai = 0; ai < size; ai++) {
-           Card a = cards.get(ai);
+           Card a = cards[ai];
            for (int bi = ai + 1; bi < size; bi++) {
-               Card b = cards.get(bi);
+               Card b = cards[bi];
                for (int ci = bi + 1; ci < size; ci++) {
-                   Card c = cards.get(ci);
+                   Card c = cards[ci];
                    if (validateSet(a, b, c)) {
-                       ArrayList<Card> set = new ArrayList<Card>();
+                       ArrayList<Card> set = new ArrayList<>();
                        set.add(a);
                        set.add(b);
                        set.add(c);
@@ -71,7 +71,7 @@ public class CardBean {
        return result;
    }
     
-    public boolean setExists(List<Card> cards) {
+    public boolean setExists(Card[] cards) {
         return getAllSets(cards, true).size() > 0;
     }
     

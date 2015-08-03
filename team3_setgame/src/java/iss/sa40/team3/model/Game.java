@@ -36,6 +36,7 @@ public class Game {
     }
 
     public Game() {
+        gameId++;
     }
     
     public static int getGameId() {
@@ -112,20 +113,21 @@ public class Game {
                     .add("color", card.getColor())
                     .add("shape", card.getShape()));
         }
-        deckArray.build();
+        //deckArray.build();
         
         JsonArrayBuilder tableArray = Json.createArrayBuilder();
         
-        for(Card card : table){
-            deckArray.add(Json.createObjectBuilder()
-                    .add("number", card.getNumber())
-                    .add("shading", card.getShading())
-                    .add("color", card.getColor())
-                    .add("shape", card.getShape()));
+        for(int i=0; i< table.length; i++){
+            tableArray.add(Json.createObjectBuilder()
+                    .add("number", table[0].getNumber())
+                    .add("shading", table[0].getShading())
+                    .add("color", table[0].getColor())
+                    .add("shape", table[0].getShape()));
         }
-        tableArray.build();
+        //tableArray.build();
         
         JsonArrayBuilder playerScoreArray = Json.createArrayBuilder();
+        if(playerscore!=null){
         Set playerSet = playerscore.keySet();
         Iterator playerIterator = playerSet.iterator();
         while (playerIterator.hasNext()){
@@ -133,7 +135,13 @@ public class Game {
             System.out.println(key);
             playerScoreArray.add(Json.createObjectBuilder()
                     .add("playerEmail", key.getEmail())
-                    .add("currentScore", playerscore.get(key))
+                    .add("currentScore", playerscore.get(key)));
+        }
+        }
+        {
+           playerScoreArray.add(Json.createObjectBuilder()
+                    .add("playerEmail", "")
+                    .add("currentScore", "")
                     .build());
         }
         playerScoreArray.build();
