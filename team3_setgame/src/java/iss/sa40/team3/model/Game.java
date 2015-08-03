@@ -1,8 +1,11 @@
 package iss.sa40.team3.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Set;
 import javax.json.Json;
@@ -16,9 +19,11 @@ public class Game {
     String duration; 
     int maxPlayers;
     int round =0;
-    List<Card> deck = new ArrayList<Card>();
-    List<Card> table = new ArrayList<Card>();
+    List<Card> deck = new ArrayList<>();
+    List<Card> table = new ArrayList<>();
     HashMap<Player, Integer> playerscore;
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    String startTime = df.format(Calendar.getInstance().getTime());
 
     public Game(String title, String duration, List<Card> deck, List<Card> table, int maxPlayers) {
         gameId++;
@@ -27,17 +32,16 @@ public class Game {
         this.maxPlayers = maxPlayers;
         this.deck = deck;
         this.table = table;
-        playerscore = new HashMap<Player, Integer>();
-    }
-
-    public static int getGameId() {
-        return gameId;
+        playerscore = new HashMap<>();
     }
 
     public Game() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    public static int getGameId() {
+        return gameId;
+    }
+    
     public String getTitle() {
         return title;
     }
@@ -93,6 +97,10 @@ public class Game {
     public void setRound(int round) {
         this.round = round;
     }
+
+    public String getStartTime() {
+        return startTime;
+    }
     
     public JsonObject toJson(){
         
@@ -139,12 +147,13 @@ public class Game {
                 .add("deck", deckArray)
                 .add("table", tableArray)
                 .add("playerScoreArray", playerScoreArray)
+                .add("startTime", startTime)
                 .build());
     }
 
     @Override
     public String toString() {
-        return "Game{" + "title=" + title + ", duration=" + duration + ", maxPlayers=" + maxPlayers + ", round=" + round + ", deck=" + deck + ", table=" + table + ", playerscore=" + playerscore + '}';
+        return "Game{" + "title=" + title + ", duration=" + duration + ", maxPlayers=" + maxPlayers + ", round=" + round + ", deck=" + deck + ", table=" + table + ", playerscore=" + playerscore + ", df=" + df + ", startTime=" + startTime + '}';
     }
     
 }
