@@ -12,13 +12,13 @@
         <link href="game.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-<!--        Card Template-->
+        <!--        Card Template-->
         <script id="cardtemplate" type="text/x-handlebars">
             <li class="ui-state-default" id="{{ cardid }}">
-                <img src="images/cards/{{ cardid }}.gif">
+            <img src="images/cards/{{ cardid }}.gif">
             </li>
         </script>
-        
+
     </head>
 
     <body>
@@ -30,13 +30,18 @@
                         <div id="headerlogo" class="col-md-1">
                             <img src="images/SetGame_Team3_logo.png" alt=""/>
                         </div>
-                        <div id="headerleft" class="col-md-11">
+                        <div id="headerleft" class="col-md-6">
                             <h1 contenteditable="true">TEAM 3 SET GAME</h1>
+                        </div>
+                        <div id="headerright" class="col-md-5">
+                            <br>
+                            <button type="button" id=btn_instructions class="btn btn-default" data-toggle="modal" data-target="#instructionmodal">How to play</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="section">
             <div class="container">
                 <div class="row">
@@ -121,5 +126,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    </body>
-                                                    </html>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="instructionmodal" role="dialog">
+                                                        <div class="modal-dialog">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">How To Play SET Card Game</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <iframe width="480" height="385" src="https://www.youtube.com/embed/bMhJmrJVP4Q?html5=1" frameborder="0" allowfullscreen></iframe>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        </body>
+
+
+                                                        </html>

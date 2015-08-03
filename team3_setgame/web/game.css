@@ -1,6 +1,6 @@
-#headerleft > img
+.modal-body
 {
-    text-align: left;
+    text-align: center;
 }
 
 #headerlogo > img
@@ -9,6 +9,17 @@
     width: 80px;
     height: 80px;
 }
+
+#headerleft > img
+{
+    text-align: left;
+}
+
+#headerright
+{
+    text-align: right;
+}
+
 
 #feedback 
 { 

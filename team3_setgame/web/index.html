@@ -9,6 +9,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="js/validator.js" type="text/javascript"></script>
         <script src="js/jquery-ui.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/handlebars-v3.0.3.js" type="text/javascript"></script>
@@ -26,16 +27,16 @@ and open the template in the editor.
                 <td>{{ gametimeelaspe }}</td>
             </tr>
         </script>
-        
+
         <!--        SCORE TEMPLATE-->
         <script id="scoretemplate" type="text/x-handlebars">
             <tr>
-                <td>{{ playerindex }}</td>
-                <td>{{ playername }}</td>
-                <td>{{ playerscore }}</td>
+            <td>{{ playerpic }}</td>
+            <td>{{ playername }}</td>
+            <td>{{ playerscore }}</td>
             </tr>
         </script>
-        
+
     </head>
     <body>
         <div class="section">
@@ -67,184 +68,173 @@ and open the template in the editor.
                         <h4 class="modal-title" id="exampleModalLabel">CREATE NEW PLAYER</h4>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form data-toggle="validator" role="form">
                             <div class="form-group">
-                                <label for="recipient-name" class="control-label">Name</label>
-                                <input type="text" class="form-control" id="create_playername">
+                                <label for="inputName" class="control-label">Name</label>
+                                <input type="text" class="form-control" id="inputName" placeholder="Input Your Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="control-label">Email</label>
-                                <input type="text" class="form-control" id="create_playeremail">
+                                <label for="inputEmail" class="control-label">Email</label>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+                                <div class="help-block with-errors"></div>  
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="control-label">Password</label>
-                                <input type="password" class="form-control" id="create_playerpwd">
+                                <label for="inputPassword" class="control-label">Password</label>
+                                <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
+                                <span class="help-block">Minimum of 6 characters</span>
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="control-label">Confrim Password</label>
-                                <input type="password" class="form-control" id="create_playercfmpwd">
+                                <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
+                                <div class="help-block with-errors"></div>
                             </div>
-                        </form>
+                            <div class="form-group">
+<!--                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Submit</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <!--END OF FORM: CREATE NEW PLAYER-->
+    </div>
+</div>
+</div>
+<!--END OF FORM: CREATE NEW PLAYER-->
 
-        <!--        POP UP FORM: CREATE NEW GAME-->
-        <div class="modal fade" id="creategamemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">CREATE NEW GAME</h4>
+<!--        POP UP FORM: CREATE NEW GAME-->
+<div class="modal fade" id="creategamemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">CREATE NEW GAME</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Title</label>
+                        <input type="text" class="form-control" id="create_gametitle">
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label">Title</label>
-                                <input type="text" class="form-control" id="create_gametitle">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">No Of Players</label>
-                                <input type="number" class="form-control" id="create_gamenoofplayer">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="control-label">Duration</label>
-                                <input type="text" class="form-control" id="create_gameduration">
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">No Of Players</label>
+                        <input type="number" class="form-control" id="create_gamenoofplayer">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Create</button>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">Duration</label>
+                        <input type="text" class="form-control" id="create_gameduration">
                     </div>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Create</button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!--END OF FORM: CREATE NEW GAME-->
+<!--END OF FORM: CREATE NEW GAME-->
 
-        <div class="section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h2>List of Games</h2>
-                        <table class="table table-hover table-striped" id="list_game">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Game Title</th>
-                                    <th>No of Players</th>
-                                    <th>Time Elasped</th>
-                                </tr>
-                            </thead>
-                            <tbody id="gamelist">
-                                <tr>
-                                    <td>1</td>
-                                    <td>Game A</td>
-                                    <td>8 / 10</td>
-                                    <td>30</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Game B</td>
-                                    <td>9 / 10</td>
-                                    <td>30</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <h2>High Score Board</h2>
-                            <table class="table" id="table_highscore">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>High Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mark</td>
-                                        <td>27</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Jacob</td>
-                                        <td>25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Larry</td>
-                                        <td>23</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-12">
-                            <h3>Game Details</h2>
-                                <h4>Title:</h3>
-                            <h4 id="lb_gametitle" contenteditable="true">Game A</h3>
-                                <h4>Time Elapsed:</h3>
-                                    <h4 id="lb_timelaspe" contenteditable="true">mm:ss</h3>
-                                        <h4>No of Player:</h3>
-                                            <h4 id="lb_noofplayer" contenteditable="true">8/10</h3>
-                                                <table class="table" id="table_player">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Pic</th>
-                                                            <th>Name</th>
-                                                            <th>Score</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="scorelist">
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>List of Games</h2>
+                <table class="table table-hover table-striped" id="list_game">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Game Title</th>
+                            <th>No of Players</th>
+                            <th>Time Elapsed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gamelist">
+                        <tr>
+                            <td>1</td>
+                            <td>Game A</td>
+                            <td>8 / 10</td>
+                            <td>30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <h2>High Score Board</h2>
+                    <table class="table" id="table_highscore">
+                        <thead>
+                            <tr>
+                                <th>Pic</th>
+                                <th>Name</th>
+                                <th>High Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pic</td>
+                                <td>Mark</td>
+                                <td>27</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <h3>Game Details</h2>
+                        <h4>Title:</h3>
+                    <h4 id="lb_gametitle" contenteditable="true">Game A</h3>
+                        <h4>Time Elapsed:</h3>
+                            <h4 id="lb_timelaspe" contenteditable="true">mm:ss</h3>
+                                <h4>No of Player:</h3>
+                                    <h4 id="lb_noofplayer" contenteditable="true">8/10</h3>
+                                        <table class="table" id="table_player">
+                                            <thead>
+                                                <tr>
+                                                    <th>Pic</th>
+                                                    <th>Name</th>
+                                                    <th>Score</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="scorelist">
 
-                                                    </tbody>
-                                                </table>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                <div class="section">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div id="prefooterleft" class="col-md-4">
-                                                                    <button type="button" id="btn_creategame" class="btn btn-default" data-toggle="modal" data-target="#creategamemodal" >CREATE NEW GAME</button>
-                                                                </div>
-                                                                <div id="prefootermid"  class="col-md-4">
-                                                                    <a class="btn btn-default" contenteditable="true" id="btn_joingame">VIEW GAME</a>
-                                                                </div>
-                                                                <div class="col-md-4"></div>
-                                                            </div>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                        <div class="section">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div id="prefooterleft" class="col-md-4">
+                                                            <button type="button" id="btn_creategame" class="btn btn-default" data-toggle="modal" data-target="#creategamemodal" >CREATE NEW GAME</button>
                                                         </div>
+                                                        <div id="prefootermid"  class="col-md-4">
+                                                            <a class="btn btn-default" contenteditable="true" id="btn_joingame">VIEW GAME</a>
+                                                        </div>
+                                                        <div class="col-md-4"></div>
                                                     </div>
                                                 </div>
-                                                </div>
-                                                <div class="section">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <hr>
-                                                            </div>
-                                                            <div id="footer" class="col-md-12">
-                                                                © 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
-                                                                are registered trademarks of Team3Resources. All video, audio, visual and
-                                                                textual content on this web site (including all names, characters, trademarks
-                                                                and logos) is protected by copyright, trademark and other intellectual
-                                                                property rights. By using this site, you agree to the Terms and Conditions
-                                                                of Use.
-                                                            </div>
-                                                        </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="section">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <hr>
+                                                    </div>
+                                                    <div id="footer" class="col-md-12">
+                                                        © 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
+                                                        are registered trademarks of Team3Resources. All video, audio, visual and
+                                                        textual content on this web site (including all names, characters, trademarks
+                                                        and logos) is protected by copyright, trademark and other intellectual
+                                                        property rights. By using this site, you agree to the Terms and Conditions
+                                                        of Use.
                                                     </div>
                                                 </div>
-                                                </body>
-                                                </html>
+                                            </div>
+                                        </div>
+                                        </body>
+                                        </html>
