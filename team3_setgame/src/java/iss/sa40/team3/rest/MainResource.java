@@ -48,7 +48,7 @@ public class MainResource {
     public Response getTopPlayers(){
         List<Player> topPlayers = playerBean.getTop10Players();
         
-        JsonArray topPlayersArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder topPlayersArray = Json.createArrayBuilder();
         for (Player player : topPlayers){
             topPlayersArray.add(player.toJson());
         };
