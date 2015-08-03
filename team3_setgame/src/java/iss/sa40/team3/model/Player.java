@@ -1,12 +1,16 @@
 package iss.sa40.team3.model;
 
+import java.io.Serializable;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Player {
+@Table(name="player")
+public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     @Id
     private String email;
