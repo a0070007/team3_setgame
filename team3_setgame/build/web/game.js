@@ -15,21 +15,11 @@ $(function () {
     }).selectable({
         stop: function () {
             $(".ui-selected", this).each(function () {
-                if (!chosencards.contain($(this).attr("id")))
+                if (!isInArray($(this).attr("id"),chosencards))
                 chosencards.push($(this).attr("id"));
             });
         }
     });
-
-//    $("#selectable").selectable({
-//        stop: function () {
-//            $(".ui-selected", this).each(function () {
-//                chosencards.push($(this).attr("id"));
-//                alert($(this).attr("id"));
-//            });
-//        }
-//    });
-
 });
 
  

@@ -1,3 +1,15 @@
+#headerleft > img
+{
+    text-align: left;
+}
+
+#headerlogo > img
+{
+    text-align: left;
+    width: 80px;
+    height: 80px;
+}
+
 #feedback 
 { 
     font-size: 1.4em; 
