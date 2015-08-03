@@ -11,11 +11,11 @@ public class CardBean {
 
     
     public List<Card> getShuffledDeck(){
-        List<Card> cards = new ArrayList<Card>(81);
-        for(int number = 0; number<3; number++){
-            for(int shape = 0; shape < 3; shape++){
-                for(int shading = 0; shading < 3; shading++){
-                    for(int color = 0; color < 3; color++){
+        List<Card> cards = new ArrayList<>(81);
+        for(int number = 1; number< 4; number++){
+            for(int shape = 1; shape < 4; shape++){
+                for(int shading = 1; shading < 4; shading++){
+                    for(int color = 1; color < 4; color++){
                         cards.add(new Card(number, shape, shading, color));
                     }
                 }

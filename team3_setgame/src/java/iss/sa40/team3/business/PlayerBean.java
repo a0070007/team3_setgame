@@ -6,8 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 @Stateless
 public class PlayerBean {
@@ -21,19 +19,19 @@ public class PlayerBean {
     
     public boolean updatePlayer(String email, String password, String name, int highscore){
         
-        Query query = em.createQuery("Update player set password = :password, name ="
-                + " :name, highscore  = :highscore where email = :email");
-        query.setParameter("password", password);
-        query.setParameter("name", name);
-        query.setParameter("highscore", highscore);
-        query.setParameter("email", email);
-        int result = query.executeUpdate();
-        if(result>0)
-            return true;
-        else
+        Player player = findPlayer(email);
+        if(player == null)
             return false;
-        
-        //return((query.executeUpdate() == 1)? true:false);
+        player.setPassword(password);
+        player.setName(name);
+        player.setHighscore(highscore);
+        try{
+        em.merge(player);
+        }
+        catch(IllegalArgumentException e){
+            return false;
+        }
+        return true;
     }
     
     public boolean insertPlayer(String email, String password, String name, int highscore){
@@ -53,9 +51,9 @@ public class PlayerBean {
     }
     
     public List<Player> getTop10Players(){
-        TypedQuery<Player> query = em.createQuery(
-                "SELECT * FROM table ORDER BY highscore DESC LIMIT 10", Player.class);
-        List<Player> result = query.getResultList();
+        List<Player> result = em.createQuery(
+                "SELECT p FROM Player p ORDER BY p.highscore DESC")
+                .setMaxResults(2).getResultList();
         return ((result.size() > 0)? result:null);
     }
     

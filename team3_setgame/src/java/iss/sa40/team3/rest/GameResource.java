@@ -235,10 +235,12 @@ public class GameResource {
         
         //Add player to game
         HashMap<Player, Integer> playerscore = selectedGame.getPlayerscore();
+        if(playerscore == null)
+            playerscore = new HashMap<>();
         playerscore.put(player, 0);
         selectedGame.setPlayerscore(playerscore);
         
-        return (Response.ok().build());
+        return (Response.ok(selectedGame.toJson()).build());
     }
     
 }
