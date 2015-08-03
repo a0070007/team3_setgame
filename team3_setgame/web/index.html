@@ -16,6 +16,26 @@ and open the template in the editor.
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <link href="index.css" rel="stylesheet" type="text/css"/>
+
+        <!--        GAME TEMPLATE-->
+        <script id="gametemplate" type="text/x-handlebars">
+            <tr>
+                <td>{{ gameid }}</td>
+                <td>{{ gametitle }}</td>
+                <td>{{ gamenoofplayer }}</td>
+                <td>{{ gametimeelaspe }}</td>
+            </tr>
+        </script>
+        
+        <!--        SCORE TEMPLATE-->
+        <script id="scoretemplate" type="text/x-handlebars">
+            <tr>
+                <td>{{ playerindex }}</td>
+                <td>{{ playername }}</td>
+                <td>{{ playerscore }}</td>
+            </tr>
+        </script>
+        
     </head>
     <body>
         <div class="section">
@@ -123,7 +143,7 @@ and open the template in the editor.
                                     <th>Time Elasped</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="gamelist">
                                 <tr>
                                     <td>1</td>
                                     <td>Game A</td>
@@ -164,9 +184,7 @@ and open the template in the editor.
                                     <tr>
                                         <td>3</td>
                                         <td>Larry</td>
-                                        <td>23
-                                            <br>
-                                        </td>
+                                        <td>23</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -187,7 +205,7 @@ and open the template in the editor.
                                                             <th>Score</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="scorelist">
                                                         <tr>
                                                             <th>Pic</th>
                                                             <td>James</td>
