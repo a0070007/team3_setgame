@@ -22,6 +22,7 @@ public class MainResource {
     @Inject private Main main;
     
     @GET
+    @Path("/getallgames")
     public Response getAllGames(){
         
         List<Game> games = main.getGames();

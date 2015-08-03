@@ -28,7 +28,7 @@ public class AccessControlResource {
         if (email != null){
             player = playerBean.findPlayer(email);
         }
-        if(!player.getPassword().equals(password))
+        if(!player.getPassword().equals(password) || player==null)
             return (Response.status(Response.Status.BAD_REQUEST).build());
         return (Response.status(Response.Status.ACCEPTED).build());
     }

@@ -20,12 +20,12 @@ public class Game {
     int maxPlayers;
     int round =0;
     List<Card> deck = new ArrayList<>();
-    List<Card> table = new ArrayList<>();
+    Card[] table = new Card[12];
     HashMap<Player, Integer> playerscore;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     String startTime = df.format(Calendar.getInstance().getTime());
 
-    public Game(String title, String duration, List<Card> deck, List<Card> table, int maxPlayers) {
+    public Game(String title, String duration, List<Card> deck, Card[] table, int maxPlayers) {
         gameId++;
         this.title = title;
         this.duration = duration;
@@ -74,11 +74,11 @@ public class Game {
         this.deck = deck;
     }
 
-    public List<Card> getTable() {
+    public Card[] getTable() {
         return table;
     }
 
-    public void setTable(List<Card> table) {
+    public void setTable(Card[] table) {
         this.table = table;
     }
 
