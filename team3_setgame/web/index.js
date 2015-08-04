@@ -15,17 +15,60 @@ $(document).ready(function () {
     $.getJSON(ipaddr + "api/main/getallgames")
             .done(function (result) {
                 $("#gamelist").empty();
-                for (var i in result) {
+                var game = result.gamesArray;
+                for (var i in game) {
                     $("#gamelist").append(
                             gamelisttemplate({
-                                gameid: result[i].gameId,
-                                gametitle: result[i].title,
-                                gamenoofplayer: result[i].maxPlayers,
-                                gametimestart: result[i].startTime
+                                gameid: game[i].gameId,
+                                gametitle: game[i].title,
+                                gamenoofplayer: game[i].maxPlayers,
+                                gametimestart: game[i].startTime
                             })
                             );
                 }
             });
+            
+    //Fetches highscore board upon load of web site
+    $.getJSON(ipaddr + "api/main/gettopplayers")
+            .done(function (result) {
+                $("#highscorelist").empty();
+                var topPlayer = result.topPlayersArray;
+                for (var i in topPlayer) {
+                    $("#highscorelist").append(
+                            highscorelisttemplate({
+                                gravatarurl: "",
+                                playername: topPlayer[i].name,
+                                playerscore: topPlayer[i].highscore
+                            })
+                            );
+                }
+            });    
+            
+    //create new player        
+    $("#btn_submitplayer").on("click", function() {
+        $.getJSON("api/player/" + $("#inputEmail").val() + "/" + $("#inputName").val() + "/" +$("#inputPassword").val())
+            .done(function(result){
+                if(result === Response.Status.BAD_REQUEST){
+                    //return unsucessful
+                }
+                else{
+                    //return successful
+                }
+            });
+    });
+    
+    //create new game
+    $("#btn_submitgame").on("click", function() {
+        $.getJSON("api/game/" + $("#inputTitle").val + "/" + $("#inputDuration").val() + "/" +$("#inputPlayers").val())
+            .done(function(result){
+                if(result === Response.Status.BAD_REQUEST){
+                    //return unsucessful
+                }
+                else{
+                    Response.redirect("index.html");
+                }
+            });
+    });
 
     $('#gameform')
             .formValidation({
