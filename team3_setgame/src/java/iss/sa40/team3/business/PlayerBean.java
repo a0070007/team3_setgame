@@ -1,20 +1,54 @@
 package iss.sa40.team3.business;
 
+import iss.sa40.team3.model.Game;
+import iss.sa40.team3.model.Main;
 import iss.sa40.team3.model.Player;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.ws.rs.core.Response;
 
 @Stateless
 public class PlayerBean {
     
     @PersistenceContext private EntityManager em;
+    @Inject private Main main;
     
     public Player findPlayer(String email){
         
         return(em.find(Player.class, email));
+    }
+    
+    public Player findPlayerFromGame (String email, int gameId){
+        List<Game> games = main.getGames();
+        Game selectedGame = null;
+        for(Game game : games){
+            if(game.getGameId() == gameId){
+                selectedGame = game;
+            }
+        }
+        if(selectedGame == null)
+            return (null);
+        
+        Set<Player> playerSet= selectedGame.getPlayerscore().keySet();
+        List<Player> playerList = new ArrayList<>();
+        playerList.addAll(playerSet);
+        Player player = null;
+        for(Player p : playerList) {
+            System.out.println(p.getEmail());
+            System.out.println("*****");
+            if(p.getEmail().contentEquals(email)){
+                player = p;
+            }
+        }
+        return player;
+        
     }
     
     public boolean updatePlayer(String email, String password, String name, int highscore){
