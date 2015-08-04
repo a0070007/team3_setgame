@@ -25,24 +25,33 @@ public class CardBean {
         return cards;
     }
     
-    public List<Object> issueCards(List<Card> deck, Card[] table, int cardCount) {
+    public List<Object> issue12Cards(List<Card> deck, Card[] table) {
         List<Object> list = new ArrayList<>();
-        List<Card> newCards = new ArrayList<>();
-        for (int i=0; i < cardCount; i++) {
+        for (int i=0; i < 12; i++) {
                 Card card = deck.remove(deck.size() - 1); 
                 table[i] = card;
-                newCards.add(card);
         }
         
         list.add((List<Card>) deck);
         list.add(table);
-        list.add((List<Card>) newCards);
         return list;
     }
 
-    public Card[] removeCards(int[] cardPosition, Card[] table) {
-        for(int i =0; i<cardPosition.length; i++)    
-            table[i] = null;
+    public List<Object> issue3Cards(int[] position, List<Card> deck, Card[] table) {
+        List<Object> list = new ArrayList<>();
+        for (int i=0; i < 3; i++) {
+                Card card = deck.remove(deck.size() - 1); 
+                table[position[i]] = card;
+        }
+        
+        list.add((List<Card>) deck);
+        list.add(table);
+        return list;
+    }
+    
+    public Card[] removeCards(int[] position, Card[] table) {
+        for(int i =0; i<position.length; i++)    
+            table[position[i]] = null;
             
         return table;
     }

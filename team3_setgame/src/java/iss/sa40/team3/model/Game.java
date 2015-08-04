@@ -14,7 +14,10 @@ import javax.json.JsonObject;
 
 public class Game {
 
-    int gameId=0;
+    static int count=0;
+    int gameId;
+
+
     String title;
     String duration; 
     int maxPlayers;
@@ -26,7 +29,8 @@ public class Game {
     String startTime = df.format(Calendar.getInstance().getTime());
 
     public Game(String title, String duration, List<Card> deck, Card[] table, int maxPlayers) {
-        this.gameId = gameId++;
+        count = count+1;
+        this.gameId = count;
         this.title = title;
         this.duration = duration;
         this.maxPlayers = maxPlayers;
@@ -36,7 +40,8 @@ public class Game {
     }
 
     public Game() {
-        gameId++;
+        count = count+1;
+        this.gameId = count;
     }
     
     public int getGameId() {
@@ -135,12 +140,12 @@ public class Game {
                         .add("currentScore", playerscore.get(player)));
             }
         }
-        else
-        {
-            playerScoreArray.add(Json.createObjectBuilder()
-                    .add("playerEmail", "")
-                    .add("currentScore", ""));
-        }
+//        else
+//        {
+//            playerScoreArray.add(Json.createObjectBuilder()
+//                    .add("playerEmail", "")
+//                    .add("currentScore", ""));
+//        }
         
         return (Json.createObjectBuilder()
                 .add("gameId", gameId)

@@ -39,7 +39,7 @@ public class GameResource {
         
         Card[]  table = new Card[12];
         List<Card> deck = cardBean.getShuffledDeck();
-        List<Object> list = cardBean.issueCards(deck, table, 12);
+        List<Object> list = cardBean.issue12Cards(deck, table);
         deck = (List<Card>) list.get(0);
         table = (Card[]) list.get(1);
         while(!cardBean.setExists(table)){
@@ -47,10 +47,12 @@ public class GameResource {
             Arrays.fill(table, null);
             list.clear();
             deck = cardBean.getShuffledDeck();
-            list = cardBean.issueCards(deck, table, 12);
+            list = cardBean.issue12Cards(deck, table);
             deck = (List<Card>) list.get(0);
             table = (Card[]) list.get(1);
         }
+        
+        System.out.println(cardBean.getAllSets(table, true));
         
         Game game = new Game();
         if (title != null && duration != null && maxPlayers>0){
@@ -86,7 +88,7 @@ public class GameResource {
     }
     
     @GET
-    @Path("{gameId}/{position1}/{cardId1}/{position2}/{cardId2}/{position3}/{cardId3}/{email}")
+    @Path("{gameId}/{position1}/{position2}/{position3}/{email}")
     public Response verifyChosenSet(
             @PathParam("gameId") int gameId,
             @PathParam("position1") int position1,
@@ -97,42 +99,9 @@ public class GameResource {
             @PathParam("cardId3") int cardId3,
             @PathParam("email") String email){
         
-        //Check if the three cards make a set
-        Card card1 = new Card(
-                Integer.parseInt(Integer.toString(cardId1).substring(0,1)), 
-                Integer.parseInt(Integer.toString(cardId1).substring(1,2)), 
-                Integer.parseInt(Integer.toString(cardId1).substring(2,3)),
-                Integer.parseInt(Integer.toString(cardId1).substring(3,4)));
-        
-        Card card2 = new Card(
-                Integer.parseInt(Integer.toString(cardId2).substring(0,1)), 
-                Integer.parseInt(Integer.toString(cardId2).substring(1,2)), 
-                Integer.parseInt(Integer.toString(cardId2).substring(2,3)),
-                Integer.parseInt(Integer.toString(cardId2).substring(3,4)));
-        
-        Card card3 = new Card(
-                Integer.parseInt(Integer.toString(cardId3).substring(0,1)), 
-                Integer.parseInt(Integer.toString(cardId3).substring(1,2)), 
-                Integer.parseInt(Integer.toString(cardId3).substring(2,3)),
-                Integer.parseInt(Integer.toString(cardId3).substring(3,4)));
-        
-        Card[] set = new Card[3];
-        set[0] = card1;
-        set[1] = card2;
-        set[2] = card3;
-        
-        int[] position = new int[3];
-        position[1] = position1;
-        position[2] = position2;
-        position[3] = position3;
-        
-        boolean isSet = cardBean.setExists(set);
-        if(isSet == false)
-            return (Response.status(Response.Status.BAD_REQUEST).build());
-        
         //Get the game
         List<Game> games = main.getGames();
-        Game selectedGame = new Game();
+        Game selectedGame = null;
         for(Game game : games){
             if(game.getGameId() == gameId){
                 selectedGame = game;
@@ -141,17 +110,38 @@ public class GameResource {
         if(selectedGame == null)
             return (Response.status(Response.Status.NOT_FOUND).build());
         
+        //Check if the three cards make a set
+        Card[] table = selectedGame.getTable();
+        Card card1 = table[position1];
+        Card card2 = table[position2];
+        Card card3 = table[position3];
+        
+        Card[] set = new Card[3];
+        set[0] = card1;
+        set[1] = card2;
+        set[2] = card3;
+        
+        boolean isSet = cardBean.setExists(set);
+        if(isSet == false)
+            return (Response.status(Response.Status.BAD_REQUEST).build());
+        
         //Get Player
-        Player player = new Player();
+        Player player = null;
         if (email != null){
-            player = playerBean.findPlayer(email);
+            player = playerBean.findPlayerFromGame(email, gameId);
         }
         if(player == null)
             return (Response.status(Response.Status.NOT_FOUND).build());
         
         //Add +1 to player's score
         HashMap<Player, Integer> playerscore = selectedGame.getPlayerscore();
-        playerscore.put(player, playerscore.get(player)+1);
+        int score = playerscore.get(player)+1;
+        playerscore.put(player, score );
+        
+        int[] position = new int[3];
+        position[0] = position1;
+        position[1] = position2;
+        position[2] = position3;
         
         //remove the set (3 cards) from table and round++
         selectedGame.setTable(cardBean.removeCards(position, selectedGame.getTable()));
@@ -162,29 +152,11 @@ public class GameResource {
             return (Response.ok().build());
         
         //if there are cards in deck, return response 'ok' and id of 3 cards
-        List<Object> list = cardBean.issueCards(selectedGame.getDeck(), selectedGame.getTable(), 3);
+        List<Object> list = cardBean.issue3Cards(position,selectedGame.getDeck(), selectedGame.getTable());
         selectedGame.setDeck((List<Card>) list.get(0));
         selectedGame.setTable((Card[]) list.get(1));
         
-        List<Card> newCards = (List<Card>) list.get(2);
-        List<String> newCardsId = new ArrayList<>();
-        for(Card card: newCards){
-            int number = card.getNumber();
-            int shading = card.getShading();
-            int color = card.getColor();
-            int shape = card.getShape();
-            String cardId = String.valueOf(number) 
-                        + String.valueOf(shading)
-                        + String.valueOf(color)
-                        + String.valueOf(shape);
-            newCardsId.add(cardId);
-        }
-        
-        return (Response.ok(Json.createObjectBuilder()
-                            .add("newCard1", newCardsId.get(0))
-                            .add("newCard2", newCardsId.get(1))
-                            .add("newCard3", newCardsId.get(2))
-                            .build()).build());
+        return (Response.ok(selectedGame.toJson()).build());
     }
     
     @GET
@@ -216,7 +188,7 @@ public class GameResource {
         
         //Get game
         List<Game> games = main.getGames();
-        Game selectedGame = new Game();
+        Game selectedGame=null;
         for(Game game : games){
             if(game.getGameId() == gameId){
                 selectedGame = game;
