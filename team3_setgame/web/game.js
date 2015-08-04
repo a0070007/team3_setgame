@@ -3,13 +3,11 @@ $(document).ready(function () {
     $("#selectable li").css("height", $("#selectable li").css("width"));
 });
 
-$(function () {
-    var cardtemplate = Handlebars.compile($("#cardtemplate").html());
-    chosencards = new Array();
 
-    $("#btn_submit").on("click", function () {
-        alert(chosencards.toString());
-    });
+
+$(function () {
+    
+    chosencards = new Array();
 
     $("#selectable").bind("mousedown", function (e) {
         e.metaKey = true;
@@ -23,6 +21,8 @@ $(function () {
     });
 });
 
+
+//YOUTUBE VIDEO
 var youtubeFunc = '';
 var outerDiv = document.getElementById("instructionmodal");
 var youtubeIframe = outerDiv.getElementsByTagName("iframe")[0].contentWindow;

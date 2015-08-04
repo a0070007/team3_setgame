@@ -1,37 +1,40 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
-        <script src="js/validator.js" type="text/javascript"></script>
         <script src="js/jquery-ui.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/handlebars-v3.0.3.js" type="text/javascript"></script>
+        <script src="js/validator.js" type="text/javascript"></script>
+        <script src="js/bootstrap-combobox.js" type="text/javascript"></script>
         <script src="index.js" type="text/javascript"></script>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <link href="index.css" rel="stylesheet" type="text/css"/>
 
         <!--        GAME TEMPLATE-->
-        <script id="gametemplate" type="text/x-handlebars">
+        <script id="gamelisttemplate" type="text/x-handlebars">
             <tr>
-                <td>{{ gameid }}</td>
-                <td>{{ gametitle }}</td>
-                <td>{{ gamenoofplayer }}</td>
-                <td>{{ gametimeelaspe }}</td>
+            <td>{{ gameid }}</td>
+            <td>{{ gametitle }}</td>
+            <td>{{ gamenoofplayer }}</td>
+            <td>{{ gametimestart }}</td>
             </tr>
         </script>
 
-        <!--        SCORE TEMPLATE-->
-        <script id="scoretemplate" type="text/x-handlebars">
+        <!--       HIGH SCORE BOARD TEMPLATE-->
+        <script id="highscorelisttemplate" type="text/x-handlebars">
             <tr>
-            <td>{{ playerpic }}</td>
+            <td><img src="{{ gravatarurl }}"</td>
+            <td>{{ playername }}</td>
+            <td>{{ playerscore }}</td>
+            </tr>
+        </script>
+
+        <script id="playerlisttemplate" type="text/x-handlebars">
+            <tr>
+            <td><img src="{{ gravatarurl }}"</td>
             <td>{{ playername }}</td>
             <td>{{ playerscore }}</td>
             </tr>
@@ -48,7 +51,7 @@ and open the template in the editor.
                             <img src="images/SetGame_Team3_logo.png" alt=""/>
                         </div>
                         <div id="headerleft" class="col-md-5">
-                            <h1 contenteditable="true">TEAM 3 SET GAME</h1>
+                            <h1>TEAM 3 SET GAME</h1>
                         </div>
                         <div id="headerright" class="col-md-6">
                             <br>
@@ -59,7 +62,113 @@ and open the template in the editor.
             </div>
         </div>
 
-        <!--        POP UP FORM: CREATE NEW PLAYER-->
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>List of Games</h2>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Game Title</th>
+                                    <th>No of Players</th>
+                                    <th>Time Started</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gamelist">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <h2>High Score Board</h2>
+                            <table class="table" id="highscoreboard">
+                                <thead>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <th>Name</th>
+                                        <th>High Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="highscorelist">
+                                    <tr>
+                                        <td>pic</td>
+                                        <td>Mark</td>
+                                        <td>27</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <h3>Game Details</h3>
+                            <table id="gamedetailstable">
+                                <tr>
+                                    <td>Title:</td>
+                                    <td><input type="textbox" id="tb_gametitle" readonly="true"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>Time Started:</td>
+                                    <td><input type="textbox" id="tb_timestarted" readonly="true"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>No. of Players:</td>
+                                    <td><input type="textbox" id="tb_noofplayers" readonly="true"><br></td>
+                                </tr>
+                            </table>
+                            <table class="table" id="gameplayers">
+                                <thead>
+                                    <tr>
+                                        <th>Pic</th>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="playerlist">
+                                    <!-- APPEND HERE FOR THE PLAYERS IN THE CHOSEN GAME-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="prefooterleft" class="col-md-4">
+                                <button type="button" id="btn_creategame" class="btn btn-default" data-toggle="modal" data-target="#creategamemodal" >CREATE NEW GAME</button>
+                            </div>
+                            <div id="prefootermid"  class="col-md-4">
+                                <a class="btn btn-default" contenteditable="true" id="btn_joingame">VIEW GAME</a>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div id="footer" class="col-md-12">
+                        © 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
+                        are registered trademarks of Team3Resources. All video, audio, visual and
+                        textual content on this web site (including all names, characters, trademarks
+                        and logos) is protected by copyright, trademark and other intellectual
+                        property rights. By using this site, you agree to the Terms and Conditions
+                        of Use.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+<!--        POP UP FORM: CREATE NEW PLAYER-->
         <div class="modal fade" id="createplayermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -71,11 +180,12 @@ and open the template in the editor.
                         <form data-toggle="validator" role="form">
                             <div class="form-group">
                                 <label for="inputName" class="control-label">Name</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="Input Your Name" required>
+                                <input type="text" class="form-control" id="inputName" placeholder="Input Your Name" data-error="Please input your name" required>
+                                <div class="help-block with-errors"></div> 
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="control-label">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="This Email address is invalid" required>
                                 <div class="help-block with-errors"></div>  
                             </div>
                             <div class="form-group">
@@ -88,7 +198,7 @@ and open the template in the editor.
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group">
-<!--                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                <!--                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                     </div>
@@ -110,131 +220,52 @@ and open the template in the editor.
                 <h4 class="modal-title" id="exampleModalLabel">CREATE NEW GAME</h4>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="gameform" method="post" class="form-horizontal">
                     <div class="form-group">
-                        <label for="recipient-name" class="control-label">Title</label>
-                        <input type="text" class="form-control" id="create_gametitle">
+                        <label class="col-xs-3 control-label">Game Title</label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" name="title" />
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="message-text" class="control-label">No Of Players</label>
-                        <input type="number" class="form-control" id="create_gamenoofplayer">
+                        <label class="col-xs-3 control-label">No. of Players</label>
+                        <div class="col-xs-5 selectContainer">
+                            <select class="form-control" name="players">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="message-text" class="control-label">Duration</label>
-                        <input type="text" class="form-control" id="create_gameduration">
+                        <label class="col-xs-3 control-label">Color</label>
+                        <div class="col-xs-5 selectContainer">
+                            <select class="form-control" name="duration">
+                                <option value="10">10 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="submit" class="btn btn-primary">Create Game</button>
+                        </div>
+                    </div>
+                    
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Create</button>
             </div>
         </div>
     </div>
-</div>
 
-<!--END OF FORM: CREATE NEW GAME-->
-
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <h2>List of Games</h2>
-                <table class="table table-hover table-striped" id="list_game">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Game Title</th>
-                            <th>No of Players</th>
-                            <th>Time Elapsed</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gamelist">
-                        <tr>
-                            <td>1</td>
-                            <td>Game A</td>
-                            <td>8 / 10</td>
-                            <td>30</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                    <h2>High Score Board</h2>
-                    <table class="table" id="table_highscore">
-                        <thead>
-                            <tr>
-                                <th>Pic</th>
-                                <th>Name</th>
-                                <th>High Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>pic</td>
-                                <td>Mark</td>
-                                <td>27</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-12">
-                    <h3>Game Details</h2>
-                        <h4>Title:</h3>
-                    <h4 id="lb_gametitle" contenteditable="true">Game A</h3>
-                        <h4>Time Elapsed:</h3>
-                            <h4 id="lb_timelaspe" contenteditable="true">mm:ss</h3>
-                                <h4>No of Player:</h3>
-                                    <h4 id="lb_noofplayer" contenteditable="true">8/10</h3>
-                                        <table class="table" id="table_player">
-                                            <thead>
-                                                <tr>
-                                                    <th>Pic</th>
-                                                    <th>Name</th>
-                                                    <th>Score</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="scorelist">
-
-                                            </tbody>
-                                        </table>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        <div class="section">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div id="prefooterleft" class="col-md-4">
-                                                            <button type="button" id="btn_creategame" class="btn btn-default" data-toggle="modal" data-target="#creategamemodal" >CREATE NEW GAME</button>
-                                                        </div>
-                                                        <div id="prefootermid"  class="col-md-4">
-                                                            <a class="btn btn-default" contenteditable="true" id="btn_joingame">VIEW GAME</a>
-                                                        </div>
-                                                        <div class="col-md-4"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="section">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <hr>
-                                                    </div>
-                                                    <div id="footer" class="col-md-12">
-                                                        © 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
-                                                        are registered trademarks of Team3Resources. All video, audio, visual and
-                                                        textual content on this web site (including all names, characters, trademarks
-                                                        and logos) is protected by copyright, trademark and other intellectual
-                                                        property rights. By using this site, you agree to the Terms and Conditions
-                                                        of Use.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </body>
-                                        </html>
+    <!--END OF FORM: CREATE NEW GAME-->
+</body>
+</html>

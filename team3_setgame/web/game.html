@@ -12,13 +12,6 @@
         <link href="game.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
-        <!--        Card Template-->
-        <script id="cardtemplate" type="text/x-handlebars">
-            <li class="ui-state-default" id="{{ cardid }}">
-            <img src="images/cards/{{ cardid }}.gif">
-            </li>
-        </script>
-
     </head>
 
     <body>
@@ -31,7 +24,7 @@
                             <img src="images/SetGame_Team3_logo.png" alt=""/>
                         </div>
                         <div id="headerleft" class="col-md-6">
-                            <h1 contenteditable="true">TEAM 3 SET GAME</h1>
+                            <h1>TEAM 3 SET GAME</h1>
                         </div>
                         <div id="headerright" class="col-md-5">
                             <br>
@@ -47,18 +40,18 @@
                 <div class="row">
                     <div class="col-md-5">
                         <ul id="selectable">
-                            <li class="ui-state-default" id="01"><img src="images/cards/01.gif"></li>
-                            <li class="ui-state-default" id="02"><img src="images/cards/02.gif"></li>
-                            <li class="ui-state-default" id="03"><img src="images/cards/03.gif"></li>
-                            <li class="ui-state-default">4</li>
-                            <li class="ui-state-default">5</li>
-                            <li class="ui-state-default">6</li>
-                            <li class="ui-state-default">7</li>
-                            <li class="ui-state-default">8</li>
-                            <li class="ui-state-default">9</li>
-                            <li class="ui-state-default">10</li>
-                            <li class="ui-state-default">11</li>
-                            <li class="ui-state-default">12</li>
+                            <li class="ui-state-default"><img id="0" src="images/cards/01.gif"></li>
+                            <li class="ui-state-default"><img id="1" src="images/cards/02.gif"></li>
+                            <li class="ui-state-default"><img id="2" src="images/cards/03.gif"></li>
+                            <li class="ui-state-default"><img id="3" src="images/cards/04.gif"></li>
+                            <li class="ui-state-default"><img id="4" src="images/cards/05.gif"></li>
+                            <li class="ui-state-default"><img id="5" src="images/cards/06.gif"></li>
+                            <li class="ui-state-default"><img id="6" src="images/cards/07.gif"></li>
+                            <li class="ui-state-default"><img id="7" src="images/cards/08.gif"></li>
+                            <li class="ui-state-default"><img id="8" src="images/cards/09.gif"></li>
+                            <li class="ui-state-default"><img id="9" src="images/cards/10.gif"></li>
+                            <li class="ui-state-default"><img id="10" src="images/cards/11.gif"></li>
+                            <li class="ui-state-default"><img id="11" src="images/cards/12.gif"></li>
                         </ul>
                     </div>
                     <div class="col-md-7">
@@ -78,75 +71,72 @@
                                         <td>James</td>
                                         <td>8</td>
                                     </tr>
-                                    <tr>
-                                        <th>Pic</th>
-                                        <td>John</td>
-                                        <td>4</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Pic</th>
-                                        <td>Peter</td>
-                                        <td>3</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-md-6">
                             <h3>Game Details</h3>
-                            <h4>Title:</h3>
-                                <h4 id="lb_gametitle" contenteditable="true">Game A</h3>
-                                    <h4>Time Elapsed:</h3>
-                                        <h4 id="lb_timelaspe" contenteditable="true">mm:ss</h3>
-                                            <h4>No of Player:</h3>
-                                                <h4 id="lb_noofplayer" contenteditable="true">8/10</h3>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <hr>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <h3>Game Chat</h3>
-                                                        <button type="button" id=btn_submit class="btn btn-primary">Submit</button>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    <div class="section">
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <hr>
-                                                                </div>
-                                                                <div class="col-md-12">© 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
-                                                                    are registered trademarks of Team3Resources. All video, audio, visual and
-                                                                    textual content on this web site (including all names, characters, trademarks
-                                                                    and logos) is protected by copyright, trademark and other intellectual
-                                                                    property rights. By using this site, you agree to the Terms and Conditions
-                                                                    of Use.</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                            <table id="gamedetailstable">
+                                <tr>
+                                    <td>Title:</td>
+                                    <td><input type="textbox" id="tb_gametitle" readonly="true"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>Time Started:</td>
+                                    <td><input type="textbox" id="tb_timestarted" readonly="true"><br></td>
+                                </tr>
+                                <tr>
+                                    <td>No. of Players:</td>
+                                    <td><input type="textbox" id="tb_noofplayers" readonly="true"><br></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-12">
+                            <h3>Game Chat</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-12">© 2015 Team 3 Inc. All rights reserved.All designated logos and slogans
+                        are registered trademarks of Team3Resources. All video, audio, visual and
+                        textual content on this web site (including all names, characters, trademarks
+                        and logos) is protected by copyright, trademark and other intellectual
+                        property rights. By using this site, you agree to the Terms and Conditions
+                        of Use.</div>
+                </div>
+            </div>
+        </div>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="instructionmodal" role="dialog">
-                                                        <div class="modal-dialog">
+        <!-- Modal -->
+        <div class="modal fade" id="instructionmodal" role="dialog">
+            <div class="modal-dialog">
 
-                                                            <!-- Modal content-->
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                    <h4 class="modal-title">How To Play SET Card Game</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <iframe width="480" height="385" src="https://www.youtube.com/embed/bMhJmrJVP4Q?html5=1" frameborder="0" allowfullscreen></iframe>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">How To Play SET Card Game</h4>
+                    </div>
+                    <div class="modal-body">
+                        <iframe width="480" height="385" src="https://www.youtube.com/embed/bMhJmrJVP4Q?html5=1" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
 
-                                                        </body>
+    </body>
 
 
-                                                        </html>
+</html>
