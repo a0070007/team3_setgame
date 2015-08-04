@@ -1,25 +1,27 @@
+var ipaddr = "";
+
+var gamelisttemplate =
+        Handlebars.compile($("#gamelisttemplate").html());
+
+var highscorelisttemplate =
+        Handlebars.compile($("#highscorelisttemplate").html());
+
+var playerlisttemplate =
+        Handlebars.compile($("#playerlisttemplate").html());
+
 $(document).ready(function () {
 
-    var gamelisttemplate =
-            Handlebars.compile($("#gamelisttemplate").html());
-
-    var highscorelisttemplate =
-            Handlebars.compile($("#highscorelisttemplate").html());
-
-    var playerlisttemplate =
-            Handlebars.compile($("#playerlisttemplate").html());
-    
     //Fetches all games upon load of web site
-    $.getJSON("")
+    $.getJSON(ipaddr + "api/main/getallgames")
             .done(function (result) {
                 $("#gamelist").empty();
                 for (var i in result) {
                     $("#gamelist").append(
                             gamelisttemplate({
-                                gameid: result[i].id,
+                                gameid: result[i].gameId,
                                 gametitle: result[i].title,
-                                gamenoofplayer: result[i].noofplayer,
-                                gametimestart: result[i].gametimestart
+                                gamenoofplayer: result[i].maxPlayers,
+                                gametimestart: result[i].startTime
                             })
                             );
                 }
