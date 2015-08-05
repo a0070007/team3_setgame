@@ -137,6 +137,7 @@ public class GameResource {
         HashMap<Player, Integer> playerscore = selectedGame.getPlayerscore();
         int score = playerscore.get(player)+1;
         playerscore.put(player, score );
+        selectedGame.setPlayerscore(playerscore);
         
         int[] position = new int[3];
         position[0] = position1;
